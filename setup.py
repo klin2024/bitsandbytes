@@ -15,27 +15,12 @@ class BinaryDistribution(Distribution):
     def has_ext_modules(self):
         return True
 
-
-class ExtBuildPy(build_py):
-    def run(self):
-        # build_cmake needs to be called prior to build_py, as the latter
-        # collects the files output into the package directory.
-        try:
-            self.run_command("build_cmake")
-        except DistutilsModuleError:
-            warn(
-                "scikit-build-core not installed, CMake will not be invoked automatically. "
-                "Please install scikit-build-core or run CMake manually to build extensions."
-            )
-        super().run()
-
-
 setup(
     version="0.48.0",
     packages=find_packages(),
     distclass=BinaryDistribution,
     cmake_source_dir=".",
-    cmdclass={
-        "build_py": ExtBuildPy,
-    },
+    package_data={
+        "bitsandbytes" : ["libbitsandbytes_rocm.dll"]
+    }
 )
