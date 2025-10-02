@@ -21,6 +21,6 @@ setup(
     distclass=BinaryDistribution,
     cmake_source_dir=".",
     package_data={
-        "bitsandbytes" : ["libbitsandbytes_rocm.dll"]
+        "bitsandbytes" : ["libbitsandbytes_rocm70.dll"]
     }
 )
