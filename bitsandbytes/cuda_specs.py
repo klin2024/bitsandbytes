@@ -98,5 +98,4 @@ def get_rocm_gpu_arch() -> str:
             pass
     
     default_arch = "gfx1151"
-    print(f"Select default gfx arch : {default_arch}")
     return default_arch
