@@ -35,7 +35,7 @@ setup(
     packages=find_packages(),
     distclass=BinaryDistribution,
     cmake_source_dir=".",
-    cmdclass={
-        "build_py": ExtBuildPy,
+    package_data={
+        "bitsandbytes" : ["libbitsandbytes_rocm70.dll"]
     },
 )
