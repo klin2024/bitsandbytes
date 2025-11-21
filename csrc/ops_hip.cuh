@@ -11,7 +11,11 @@
 #include <cstdint>
 #include <iostream>
 #include <stdio.h>
-#include <unistd.h>
+#if defined(_WIN32) || defined(_WIN64)
+    // #include <unistd.h>
+#else
+    #include <unistd.h>
+#endif
 
 #include <functional>
 #include <hip/hip_fp16.h>
