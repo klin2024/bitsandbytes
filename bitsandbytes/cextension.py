@@ -86,10 +86,17 @@ def get_available_cuda_binary_versions() -> list[str]:
         pattern = rf"{BNB_BACKEND.lower()}(\d+)"
         match = re.search(pattern, lib.name)
         if match:
-            ver_code = int(match.group(1))
-            major = ver_code // 10
-            minor = ver_code % 10
-            versions.append(f"{major}.{minor}")
+            code = match.group(1)
+            if torch.version.hip:
+                # ROCm shortcodes are concatenated major+minor (e.g. "715" -> 7.15,
+                # "62" -> 6.2); major is single-digit, minor is the remainder.
+                major, minor = code[0], code[1:]
+                versions.append(f"{major}.{minor}")
+            else:
+                ver_code = int(code)
+                major = ver_code // 10
+                minor = ver_code % 10
+                versions.append(f"{major}.{minor}")
     return sorted(versions)
 
 
