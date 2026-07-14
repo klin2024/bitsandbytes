@@ -48,6 +48,12 @@ def get_cuda_version_string() -> Optional[str]:
     if version_tuple is None:
         return None
     major, minor = version_tuple
+    # ROCm shortcodes concatenate major and minor (e.g. 7.15 -> "715", 6.2 -> "62")
+    # to match the CMake DLL naming (hipconfig version with dots stripped). The CUDA
+    # `major*10+minor` arithmetic breaks for two-digit minors (7.15 -> 85), so ROCm
+    # must use plain concatenation instead.
+    if torch.version.hip:
+        return f"{major}{minor}"
     return f"{major * 10 + minor}"
 
 
